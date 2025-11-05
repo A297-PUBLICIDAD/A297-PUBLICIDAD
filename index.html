@@ -24,18 +24,15 @@
             --font-base: 'Roboto', sans-serif;
             --border-radius-md: 12px;
         }
-
         /* Reset y base para centrado absoluto en el body */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         html, body {
             height: 100%; /* Necesario para centrado vertical */
         }
-
         body {
             font-family: var(--font-base);
             background-color: var(--bg-color);
@@ -50,7 +47,6 @@
             line-height: 1.5;
             padding: 1rem 0.5rem; /* Pequeño padding general */
         }
-
         main {
             flex-grow: 1; /* Permite que el main tome el espacio restante */
             width: 100%;
@@ -59,7 +55,6 @@
             flex-direction: column;
             align-items: center;
         }
-
         h1 {
             text-align: center;
             margin: 1.5rem 0 0.5rem 0;
@@ -68,7 +63,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         /* ==========================================================================
            2. Carrusel y Contenedores
            ========================================================================== */
@@ -85,14 +79,12 @@
             margin: 2rem auto; /* Espacio superior/inferior para separarlo */
             border: 1px solid #ddd;
         }
-
         .carousel {
             display: flex;
             height: 100%;
             /* Aplicamos la transición solo para el movimiento de slide */
-            transition: transform var(--transition-smooth); 
+            transition: transform var(--transition-smooth);
         }
-
         .slide {
             min-width: 100%; /* Cada slide ocupa el ancho total del contenedor */
             height: 100%;
@@ -104,24 +96,22 @@
             cursor: pointer;
             transition: opacity var(--transition-fast);
         }
-
         .slide img {
             width: 100%;
             height: 100%;
             /* Contiene la imagen dentro del slide, ideal para fotos de diferentes proporciones */
-            object-fit: contain; 
+            object-fit: contain;
             display: block;
             user-select: none;
             /* La imagen no tiene bordes internos para maximizar el espacio de visualización */
         }
-
         /* Flechas de navegación - ¡MEJORADAS! */
         .arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             /* Fondo blanco semitransparente con efecto blur para un look premium */
-            background: rgba(255, 255, 255, 0.2); 
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             color: var(--white); /* Texto blanco */
@@ -139,22 +129,19 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra más pronunciada */
             text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Sombra para el icono de la flecha */
         }
-
         .arrow-left { left: 1rem; }
         .arrow-right { right: 1rem; }
-
-        .arrow:hover { 
+        .arrow:hover {
             background: rgba(255, 255, 255, 0.4); /* Más opaco al pasar el ratón */
             transform: translateY(-50%) scale(1.05); /* Pequeño zoom al pasar el ratón */
         }
         .arrow:active {
             transform: translateY(-50%) scale(0.95); /* Efecto de click */
         }
-        .arrow:focus { 
-            outline: none; 
+        .arrow:focus {
+            outline: none;
             box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8), 0 0 0 6px var(--accent-color); /* Anillo de enfoque accesible */
         }
-
         /* Indicadores de slide */
         .indicators {
             position: absolute;
@@ -165,7 +152,6 @@
             gap: 0.6rem;
             z-index: 10;
         }
-
         .indicator {
             width: 0.8rem;
             height: 0.8rem;
@@ -175,13 +161,12 @@
             cursor: pointer;
             transition: background var(--transition-fast), transform var(--transition-fast);
         }
-
         .indicator.active {
             background: var(--accent-color); /* Activo con el color de acento */
             border-color: var(--accent-color);
             transform: scale(1.15);
         }
-        
+       
         /* ==========================================================================
            3. Modal (Zoom de Imagen)
            ========================================================================== */
@@ -198,7 +183,6 @@
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
-
         .modal-content {
             margin: auto;
             display: block;
@@ -212,14 +196,12 @@
             cursor: grab;
             transition: transform var(--transition-fast);
         }
-
         .modal-content img {
             width: 100%;
             height: auto;
             max-height: 95vh;
             object-fit: contain;
         }
-
         .close {
             position: absolute;
             top: 1.25rem;
@@ -231,14 +213,11 @@
             transition: color var(--transition-fast);
             user-select: none;
         }
-
         .close:hover { color: var(--white); }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
         /* ==========================================================================
            4. Footer y Adaptabilidad (Media Queries)
            ========================================================================== */
@@ -250,7 +229,6 @@
             padding: 0 1rem 1rem;
             max-width: 900px;
         }
-
         /* Adaptación a dispositivos móviles */
         @media (max-width: 768px) {
             h1 { margin-top: 1rem; font-size: 2.2rem; }
@@ -268,167 +246,147 @@
             footer { padding-bottom: 0.5rem; }
             .close { top: 0.5rem; right: 1rem; font-size: 2rem; }
         }
-        
+       
     </style>
 </head>
 <body>
     <header>
         <h1>Vicente Toledo Metalúrgica en General 🔩</h1>
     </header>
-    
+   
     <main>
         <div class="carousel-container" role="region" aria-label="Carrusel de proyectos de herrería">
             <button class="arrow arrow-left" onclick="moveSlide(-1)" aria-label="Slide anterior">❮</button>
-            
+           
             <div class="carousel" id="carousel">
                 <div class="slide" onclick="openModal(1)" tabindex="0" role="button" aria-label="Ver proyecto 1 completo"><img src="1.png" alt="Proyecto 1: Estructura metálica angular" loading="lazy" decoding="async"></div>
                 <div class="slide" onclick="openModal(2)" tabindex="0" role="button" aria-label="Ver proyecto 2 completo"><img src="2.png" alt="Proyecto 2: Parrilla o jaula de metal" loading="lazy" decoding="async"></div>
                 <div class="slide" onclick="openModal(3)" tabindex="0" role="button" aria-label="Ver proyecto 3 completo"><img src="3.png" alt="Proyecto 3: Protección de ventana con barrotes" loading="lazy" decoding="async"></div>
                 <div class="slide" onclick="openModal(4)" tabindex="0" role="button" aria-label="Ver proyecto 4 completo"><img src="4.png" alt="Proyecto 4: Escalera de metal interior" loading="lazy" decoding="async"></div>
                 <div class="slide" onclick="openModal(5)" tabindex="0" role="button" aria-label="Ver proyecto 5 completo"><img src="5.png" alt="Proyecto 5: Pasamanos y escalera exterior" loading="lazy" decoding="async"></div>
-                
+               
                 <div class="slide clone" data-index="1" aria-hidden="true"><img src="1.png" alt="Proyecto 1 Clone" loading="lazy" decoding="async"></div>
                 <div class="slide clone" data-index="2" aria-hidden="true"><img src="2.png" alt="Proyecto 2 Clone" loading="lazy" decoding="async"></div>
             </div>
-            
+           
             <button class="arrow arrow-right" onclick="moveSlide(1)" aria-label="Slide siguiente">❯</button>
             <div class="indicators" id="indicators" role="tablist" aria-label="Indicadores de slide"></div>
         </div>
     </main>
-    
+   
     <footer role="contentinfo">
         <p>Descubre nuestros proyectos innovadores en metalurgia. Haz clic en las imágenes para zoom y detalles completos. | Creado con código de ingeniería.</p>
     </footer>
-
     <div id="imageModal" class="modal" role="dialog" aria-modal="true" tabindex="-1" aria-label="Vista ampliada de imagen">
         <span class="close" onclick="closeModal()" tabindex="0" role="button" aria-label="Cerrar vista ampliada">&times;</span>
         <div class="modal-content" id="modalImgContainer">
             <img id="modalImg" src="" alt="Imagen ampliada" loading="eager">
         </div>
     </div>
-
     <script>
         // ==========================================================================
         // 5. Lógica del Carrusel con JavaScript
         // ==========================================================================
-        let currentIndex = 1; // Empezamos en el primer slide real (índice 1)
-        const allSlides = document.querySelectorAll('.slide');
-        const realSlides = document.querySelectorAll('.slide:not(.clone)');
-        const totalRealSlides = realSlides.length; // Total: 5
+        let currentIndex = 0; // Empezamos en el primer slide real
+        const slides = document.querySelectorAll('.slide:not(.clone)');
+        const totalSlides = slides.length; // 5
         const carousel = document.getElementById('carousel');
         const indicatorsContainer = document.getElementById('indicators');
+        let isAnimating = false;
         
-        // El carrusel necesita clones al inicio y al final para el loop "seamless"
-        
-        function setupClones() {
-            // Clonamos los últimos slides y los ponemos al inicio
-            const lastTwo = Array.from(realSlides).slice(-2); 
-            lastTwo.reverse().forEach(slide => {
-                const clone = slide.cloneNode(true);
-                clone.classList.add('clone-start');
-                clone.removeAttribute('onclick'); // Desactiva el modal en clones
-                carousel.prepend(clone);
-            });
+        // Crear clones para infinito: último al inicio, primero al final
+        function setupCarousel() {
+            // Clon del último slide al inicio
+            const lastSlideClone = slides[totalSlides - 1].cloneNode(true);
+            lastSlideClone.classList.add('clone');
+            lastSlideClone.removeAttribute('onclick');
+            carousel.prepend(lastSlideClone);
             
-            // Reajustamos la posición inicial al slide real index 2 (después de los clones)
-            // Ya que tenemos 2 clones al inicio, el primer slide real está en el índice 2.
-            currentIndex = 2; 
+            // Clon del primer slide al final
+            const firstSlideClone = slides[0].cloneNode(true);
+            firstSlideClone.classList.add('clone');
+            firstSlideClone.removeAttribute('onclick');
+            carousel.appendChild(firstSlideClone);
+            
+            // Ajustar posición inicial al primer slide real (después del clon)
+            currentIndex = 1;
             carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
-        
-        // Ejecuta la configuración de clones y posición inicial
-        setupClones();
 
-        // Función para crear indicadores dinámicamente
+        // Crear indicadores
         function createIndicators() {
-            for (let i = 1; i <= totalRealSlides; i++) {
+            for (let i = 0; i < totalSlides; i++) {
                 const dot = document.createElement('div');
                 dot.classList.add('indicator');
-                dot.setAttribute('role', 'tab');
-                dot.setAttribute('aria-label', `Ir a proyecto ${i}`);
-                dot.setAttribute('tabindex', '0');
-                // El índice real es i + 1 (por los dos clones de inicio)
-                dot.addEventListener('click', () => {
-                    const targetIndex = i + 1;
-                    moveSlide(targetIndex - currentIndex);
-                });
+                dot.addEventListener('click', () => moveToSlide(i));
                 indicatorsContainer.appendChild(dot);
             }
+            updateIndicators();
         }
 
         // Actualizar indicadores
         function updateIndicators() {
-            const indicators = document.querySelectorAll('.indicator');
-            // La posición real del indicador es currentIndex - 2
-            indicators.forEach((dot, idx) => {
-                const realSlideIndex = currentIndex - 2;
-                dot.classList.toggle('active', idx === realSlideIndex);
-                dot.setAttribute('aria-selected', (idx === realSlideIndex).toString());
-            });
+            const indicators = indicatorsContainer.querySelectorAll('.indicator');
+            const activeIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            indicators.forEach((dot, idx) => dot.classList.toggle('active', idx === activeIndex));
         }
-        
-        // Mover slide con manejo de loop infinito (el truco de la ingeniería)
+
+        // Mover a un slide específico
+        function moveToSlide(index) {
+            moveSlide(index - ((currentIndex - 1 + totalSlides) % totalSlides));
+        }
+
+        // Mover slide
         function moveSlide(direction) {
-            // Prevenimos movimientos rápidos que rompen la animación
-            if (carousel.isAnimating) return;
-            carousel.isAnimating = true;
-            
-            const oldIndex = currentIndex;
+            if (isAnimating) return;
+            isAnimating = true;
+
             currentIndex += direction;
-            
-            carousel.style.transition = 'transform var(--transition-smooth)';
+            carousel.style.transition = 'transform 0.5s ease-in-out';
             carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-            // Lógica de transición "seamless" (sin costuras)
-            if (currentIndex > totalRealSlides + 1) { // Si pasamos el último slide real + el primer clon
-                // Después de la animación visible, saltamos instantáneamente al primer slide real
-                setTimeout(() => {
+            setTimeout(() => {
+                if (currentIndex === totalSlides + 1) {
                     carousel.style.transition = 'none';
-                    currentIndex = 2;
+                    currentIndex = 1;
                     carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-                    carousel.isAnimating = false;
-                    updateIndicators();
-                }, 500); // 500ms es la duración de la transición (debe coincidir con --transition-smooth)
-            } else if (currentIndex < 1) { // Si vamos antes del primer slide real + los clones
-                // Después de la animación visible, saltamos instantáneamente al último slide real
-                setTimeout(() => {
+                } else if (currentIndex === 0) {
                     carousel.style.transition = 'none';
-                    currentIndex = totalRealSlides + 1;
+                    currentIndex = totalSlides;
                     carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-                    carousel.isAnimating = false;
-                    updateIndicators();
-                }, 500); // 500ms es la duración de la transición
-            } else {
-                // Si estamos en un slide normal, simplemente esperamos que termine la animación
-                setTimeout(() => {
-                    carousel.isAnimating = false;
-                    updateIndicators();
-                }, 500);
-            }
+                }
+                isAnimating = false;
+                updateIndicators();
+            }, 500);
         }
+
+        // Inicializar
+        setupCarousel();
+        createIndicators();
 
         // ==========================================================================
         // 6. Lógica del Modal (Zoom y Pan)
         // ==========================================================================
-        
+       
         // Variables para Modal (Zoom/Pan)
         let modalScale = 1;
         let isDragging = false;
         let translateX = 0;
         let translateY = 0;
         let initialDistance = 0;
+        let startX = 0;
+        let startY = 0;
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
         const modalContainer = document.getElementById('modalImgContainer');
         // Mapeo de índices (¡Rutas actualizadas a .png!)
-        const realImageSources = ["", "1.png", "2.png", "3.png", "4.png", "5.png"]; 
-        
+        const realImageSources = ["", "1.png", "2.png", "3.png", "4.png", "5.png"];
+       
         function openModal(index) {
             modalImg.src = realImageSources[index]; // Usamos el mapeo correcto
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
             modal.focus();
-
             modalImg.onload = () => {
                 modalScale = 1;
                 translateX = 0;
@@ -436,7 +394,6 @@
                 updateModalTransform();
             };
         }
-
         function closeModal() {
             modal.style.display = 'none';
             document.body.style.overflow = '';
@@ -445,11 +402,9 @@
             translateY = 0;
             updateModalTransform();
         }
-
         function updateModalTransform() {
-            modalContainer.style.transform = `translate(-50%, -50%) scale(${modalScale}) translate(${translateX}px, ${translateY}px)`;
+            modalContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${modalScale})`;
         }
-
         // Eventos de arrastre y zoom (Touch y Rueda)
         modalContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
@@ -457,7 +412,6 @@
             modalScale = Math.min(Math.max(modalScale + delta, 0.5), 5);
             updateModalTransform();
         }, { passive: false });
-
         modalContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length === 2) {
                 initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
@@ -468,12 +422,12 @@
                 startY = e.touches[0].clientY - translateY;
             }
         }, { passive: false });
-
         modalContainer.addEventListener('touchmove', (e) => {
             if (e.touches.length === 2 && initialDistance > 0) {
                 const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
                 const delta = currentDistance / initialDistance;
                 modalScale = Math.min(Math.max(modalScale * delta, 0.5), 5);
+                updateModalTransform();
                 initialDistance = currentDistance;
                 e.preventDefault();
             } else if (isDragging && e.touches.length === 1) {
@@ -483,45 +437,31 @@
                 e.preventDefault();
             }
         }, { passive: false });
-
         modalContainer.addEventListener('touchend', () => {
             initialDistance = 0;
             isDragging = false;
         });
-        
+       
         // Eventos de swipe para carrusel
+        let swipeStartX = 0;
         carousel.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
+            swipeStartX = e.touches[0].clientX;
         }, { passive: true });
-
         carousel.addEventListener('touchend', (e) => {
             const endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
+            const diff = swipeStartX - endX;
             // Si el movimiento es mayor a 50px, lo consideramos un swipe
             if (Math.abs(diff) > 50) {
                 moveSlide(diff > 0 ? 1 : -1);
             }
         }, { passive: true });
-
-
         // Cerrar modal con clic fuera o tecla ESC
         window.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
-
-        // ==========================================================================
-        // 7. Inicialización
-        // ==========================================================================
-        createIndicators();
-        updateIndicators();
-        
-        // Configuramos la posición inicial al slide real index 2 (después de los clones)
-        carousel.style.transition = 'none';
-        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
     </script>
 </body>
 </html>
