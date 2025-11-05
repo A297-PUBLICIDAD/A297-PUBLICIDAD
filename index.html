@@ -2,52 +2,99 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vicente Toledo Metalúrgica en General</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Fuente moderna -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vicente Toledo Metalúrgica en General - Proyectos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        body {
+        /* ==========================================================================
+           1. Variables CSS y Reset
+           ========================================================================== */
+        :root {
+            --primary-color: #333;
+            --secondary-color: #555;
+            --accent-color: #d9534f; /* Un rojo metálico para contraste */
+            --bg-color: #f4f4f4; /* Fondo más claro y neutro */
+            --white: #fff;
+            --shadow-lg: 0 8px 20px rgba(0,0,0,0.25);
+            --transition-fast: 0.3s ease;
+            --transition-smooth: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-base: 'Roboto', sans-serif;
+            --border-radius-md: 12px;
+        }
+
+        /* Reset y base para centrado absoluto en el body */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #e0e0e0; /* Fondo gris claro para un look industrial */
+        }
+
+        html, body {
+            height: 100%; /* Necesario para centrado vertical */
+        }
+
+        body {
+            font-family: var(--font-base);
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            /* Centrado profesional con Flexbox */
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: flex-start; /* Alineación al inicio para que el contenido fluya */
             min-height: 100vh;
             overflow-x: hidden;
-            color: #333;
+            line-height: 1.5;
+            padding: 1rem 0.5rem; /* Pequeño padding general */
         }
+
+        main {
+            flex-grow: 1; /* Permite que el main tome el espacio restante */
+            width: 100%;
+            max-width: 1100px; /* Limita el ancho en desktop */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         h1 {
             text-align: center;
-            margin: 20px 0 20px;
-            color: #222;
-            font-size: clamp(1.8em, 6vw, 3em);
+            margin: 1.5rem 0 0.5rem 0;
+            color: var(--primary-color);
+            font-size: clamp(2rem, 5vw, 3rem); /* Fuente adaptable */
             text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Sombra sutil */
+            letter-spacing: 0.05em;
         }
+
+        /* ==========================================================================
+           2. Carrusel y Contenedores
+           ========================================================================== */
         .carousel-container {
             position: relative;
-            width: 90%;
+            width: 95vw;
             max-width: 900px;
-            height: 65vh; /* Altura aumentada para mejor visualización */
+            height: 60vh;
             min-height: 350px;
             overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            background-color: #fff;
-            border: 1px solid #ccc; /* Borde para marco metálico */
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            background-color: var(--white);
+            margin: 2rem auto; /* Espacio superior/inferior para separarlo */
+            border: 1px solid #ddd;
         }
+
         .carousel {
             display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); /* Transición más suave */
             height: 100%;
-            touch-action: pan-y;
+            /* Aplicamos la transición solo para el movimiento de slide */
+            transition: transform var(--transition-smooth); 
         }
+
         .slide {
-            min-width: 100%;
+            min-width: 100%; /* Cada slide ocupa el ancho total del contenedor */
             height: 100%;
             flex-shrink: 0;
             display: flex;
@@ -55,78 +102,74 @@
             justify-content: center;
             background-color: #f0f0f0;
             cursor: pointer;
-            transition: opacity 0.3s ease;
+            transition: opacity var(--transition-fast);
         }
+
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Imagen completa, sin recortes */
+            /* Contiene la imagen dentro del slide, ideal para fotos de diferentes proporciones */
+            object-fit: contain; 
             display: block;
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra para profundidad */
+            user-select: none;
+            /* La imagen no tiene bordes internos para maximizar el espacio de visualización */
         }
-        .slide:hover img {
-            transform: scale(1.03); /* Zoom suave en hover */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
+
+        /* Flechas de navegación */
         .arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.7);
-            color: white;
+            background: var(--accent-color);
+            color: var(--white);
             border: none;
-            font-size: clamp(20px, 5vw, 32px);
+            font-size: clamp(1.25rem, 4vw, 2rem);
             cursor: pointer;
             border-radius: 50%;
-            width: clamp(45px, 12vw, 65px);
-            height: clamp(45px, 12vw, 65px);
+            width: clamp(40px, 10vw, 55px);
+            height: clamp(40px, 10vw, 55px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            transition: background 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: background var(--transition-fast);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
         }
-        .arrow-left { left: 10px; }
-        .arrow-right { right: 10px; }
-        .arrow:hover { background: rgba(0,0,0,0.9); transform: translateY(-50%) scale(1.05); }
-        .arrow:active { transform: translateY(-50%) scale(0.95); }
-        /* Indicadores (dots) para navegación */
+
+        .arrow-left { left: 1rem; }
+        .arrow-right { right: 1rem; }
+
+        .arrow:hover { background: #c9302c; } /* Tono más oscuro al pasar el ratón */
+        .arrow:focus { outline: none; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5), 0 0 0 6px var(--accent-color); }
+
+        /* Indicadores de slide */
         .indicators {
             position: absolute;
-            bottom: 10px;
+            bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 8px;
+            gap: 0.6rem;
             z-index: 10;
         }
+
         .indicator {
-            width: 12px;
-            height: 12px;
+            width: 0.8rem;
+            height: 0.8rem;
             border-radius: 50%;
-            background: rgba(255,255,255,0.7);
+            background: rgba(0,0,0,0.4);
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
+            transition: background var(--transition-fast), transform var(--transition-fast);
         }
+
         .indicator.active {
-            background: #fff;
-            transform: scale(1.2);
+            background: var(--accent-color);
+            transform: scale(1.15);
         }
-        .indicator:hover {
-            background: #ddd;
-        }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #555;
-            font-size: clamp(0.9em, 3.5vw, 1.1em);
-            padding: 0 15px;
-            font-style: italic;
-        }
-        /* Modal mejorado */
+        
+        /* ==========================================================================
+           3. Modal (Zoom de Imagen)
+           ========================================================================== */
         .modal {
             display: none;
             position: fixed;
@@ -135,10 +178,12 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
             background-color: rgba(0,0,0,0.95);
             animation: fadeIn 0.4s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
+
         .modal-content {
             margin: auto;
             display: block;
@@ -150,221 +195,229 @@
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: grab;
-            transition: transform 0.3s ease;
-            box-shadow: 0 0 20px rgba(255,255,255,0.2); /* Halo para destaque */
+            transition: transform var(--transition-fast);
         }
+
         .modal-content img {
             width: 100%;
             height: auto;
             max-height: 95vh;
             object-fit: contain;
         }
+
         .close {
             position: absolute;
-            top: 20px;
-            right: 40px;
+            top: 1.25rem;
+            right: 2.5rem;
             color: #eee;
-            font-size: 45px;
+            font-size: clamp(2rem, 6vw, 2.8rem);
             font-weight: bold;
             cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
+            transition: color var(--transition-fast);
+            user-select: none;
         }
-        .close:hover { color: #fff; transform: scale(1.1); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        /* Responsive optimizado */
+
+        .close:hover { color: var(--white); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ==========================================================================
+           4. Footer y Adaptabilidad (Media Queries)
+           ========================================================================== */
+        footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: var(--secondary-color);
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            padding: 0 1rem 1rem;
+            max-width: 900px;
+        }
+
+        /* Adaptación a dispositivos móviles */
         @media (max-width: 768px) {
-            body { padding: 10px; }
+            h1 { margin-top: 1rem; font-size: 2.2rem; }
             .carousel-container {
-                width: 100%;
-                height: 85vh;
+                width: 100vw;
+                height: 70vh;
+                margin: 1rem 0;
                 border-radius: 0;
+                box-shadow: none;
             }
-            .arrow { width: 55px; height: 55px; font-size: 28px; }
-            .arrow-left { left: 5px; } .arrow-right { right: 5px; }
-            .indicators { bottom: 5px; gap: 6px; }
-            .indicator { width: 10px; height: 10px; }
-            .modal-content { width: 100%; max-width: 100vw; }
-            .close { top: 15px; right: 25px; font-size: 35px; }
+            .arrow { width: 45px; height: 45px; font-size: 1.5rem; }
+            .arrow-left { left: 0.5rem; }
+            .arrow-right { right: 0.5rem; }
+            .indicators { bottom: 0.5rem; gap: 0.5rem; }
+            footer { padding-bottom: 0.5rem; }
+            .close { top: 0.5rem; right: 1rem; font-size: 2rem; }
         }
-        @media (max-width: 480px) {
-            h1 { font-size: 1.8em; margin: 10px 0; }
-            footer { font-size: 0.95em; padding: 0 10px; }
-        }
+        
     </style>
 </head>
 <body>
-    <div>
-        <h1>Vicente Toledo Metalúrgica en General</h1>
-        <div class="carousel-container">
-            <button class="arrow arrow-left" onclick="moveSlide(-1)">←</button>
+    <header>
+        <h1>Vicente Toledo Metalúrgica en General 🔩</h1>
+    </header>
+    
+    <main>
+        <div class="carousel-container" role="region" aria-label="Carrusel de proyectos de herrería">
+            <button class="arrow arrow-left" onclick="moveSlide(-1)" aria-label="Slide anterior">❮</button>
+            
             <div class="carousel" id="carousel">
-                <div class="slide" onclick="openModal(1)"><img src="images/imagen1.png" alt="Proyecto 1: Escalera interior" loading="lazy"></div>
-                <div class="slide" onclick="openModal(2)"><img src="images/imagen2.png" alt="Proyecto 2: Reja de ventana" loading="lazy"></div>
-                <div class="slide" onclick="openModal(3)"><img src="images/imagen3.png" alt="Proyecto 3: Estructura con ruedas" loading="lazy"></div>
-                <div class="slide" onclick="openModal(4)"><img src="images/imagen4.png" alt="Proyecto 4: Escalera exterior" loading="lazy"></div>
-                <div class="slide" onclick="openModal(5)"><img src="images/imagen5.png" alt="Proyecto 5: Caja metálica" loading="lazy"></div>
-                <div class="slide"><img src="images/imagen1.png" alt="Proyecto 1: Escalera interior" loading="lazy"></div>
-                <div class="slide"><img src="images/imagen5.png" alt="Proyecto 5: Caja metálica" loading="lazy"></div>
+                <div class="slide" onclick="openModal(1)" tabindex="0" role="button" aria-label="Ver proyecto 1 completo"><img src="1.png" alt="Proyecto 1: Estructura metálica angular" loading="lazy" decoding="async"></div>
+                <div class="slide" onclick="openModal(2)" tabindex="0" role="button" aria-label="Ver proyecto 2 completo"><img src="2.png" alt="Proyecto 2: Parrilla o jaula de metal" loading="lazy" decoding="async"></div>
+                <div class="slide" onclick="openModal(3)" tabindex="0" role="button" aria-label="Ver proyecto 3 completo"><img src="3.png" alt="Proyecto 3: Protección de ventana con barrotes" loading="lazy" decoding="async"></div>
+                <div class="slide" onclick="openModal(4)" tabindex="0" role="button" aria-label="Ver proyecto 4 completo"><img src="4.png" alt="Proyecto 4: Escalera de metal interior" loading="lazy" decoding="async"></div>
+                <div class="slide" onclick="openModal(5)" tabindex="0" role="button" aria-label="Ver proyecto 5 completo"><img src="5.png" alt="Proyecto 5: Pasamanos y escalera exterior" loading="lazy" decoding="async"></div>
+                
+                <div class="slide clone" data-index="1" aria-hidden="true"><img src="1.png" alt="Proyecto 1 Clone" loading="lazy" decoding="async"></div>
+                <div class="slide clone" data-index="2" aria-hidden="true"><img src="2.png" alt="Proyecto 2 Clone" loading="lazy" decoding="async"></div>
             </div>
-            <button class="arrow arrow-right" onclick="moveSlide(1)">→</button>
-            <div class="indicators" id="indicators"></div>
+            
+            <button class="arrow arrow-right" onclick="moveSlide(1)" aria-label="Slide siguiente">❯</button>
+            <div class="indicators" id="indicators" role="tablist" aria-label="Indicadores de slide"></div>
         </div>
-        <footer>
-            <p>Descubre nuestros proyectos innovadores en metalurgia. Haz clic en las imágenes para zoom y detalles completos.</p>
-        </footer>
-    </div>
+    </main>
+    
+    <footer role="contentinfo">
+        <p>Descubre nuestros proyectos innovadores en metalurgia. Haz clic en las imágenes para zoom y detalles completos. | Creado con código de ingeniería.</p>
+    </footer>
 
-    <!-- Modal -->
-    <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
+    <div id="imageModal" class="modal" role="dialog" aria-modal="true" tabindex="-1" aria-label="Vista ampliada de imagen">
+        <span class="close" onclick="closeModal()" tabindex="0" role="button" aria-label="Cerrar vista ampliada">&times;</span>
         <div class="modal-content" id="modalImgContainer">
-            <img id="modalImg" src="" alt="">
+            <img id="modalImg" src="" alt="Imagen ampliada" loading="eager">
         </div>
     </div>
 
     <script>
-        let currentIndex = 1;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length - 2;
+        // ==========================================================================
+        // 5. Lógica del Carrusel con JavaScript
+        // ==========================================================================
+        let currentIndex = 1; // Empezamos en el primer slide real (índice 1)
+        const allSlides = document.querySelectorAll('.slide');
+        const realSlides = document.querySelectorAll('.slide:not(.clone)');
+        const totalRealSlides = realSlides.length; // Total: 5
         const carousel = document.getElementById('carousel');
         const indicatorsContainer = document.getElementById('indicators');
-        let startX = 0;
+        
+        // El carrusel necesita clones al inicio y al final para el loop "seamless"
+        
+        function setupClones() {
+            // Clonamos los últimos slides y los ponemos al inicio
+            const lastTwo = Array.from(realSlides).slice(-2); 
+            lastTwo.reverse().forEach(slide => {
+                const clone = slide.cloneNode(true);
+                clone.classList.add('clone-start');
+                clone.removeAttribute('onclick'); // Desactiva el modal en clones
+                carousel.prepend(clone);
+            });
+            
+            // Reajustamos la posición inicial al slide real index 2 (después de los clones)
+            // Ya que tenemos 2 clones al inicio, el primer slide real está en el índice 2.
+            currentIndex = 2; 
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+        
+        // Ejecuta la configuración de clones y posición inicial
+        setupClones();
+
+        // Función para crear indicadores dinámicamente
+        function createIndicators() {
+            for (let i = 1; i <= totalRealSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('indicator');
+                dot.setAttribute('role', 'tab');
+                dot.setAttribute('aria-label', `Ir a proyecto ${i}`);
+                dot.setAttribute('tabindex', '0');
+                // El índice real es i + 1 (por los dos clones de inicio)
+                dot.addEventListener('click', () => {
+                    const targetIndex = i + 1;
+                    moveSlide(targetIndex - currentIndex);
+                });
+                indicatorsContainer.appendChild(dot);
+            }
+        }
+
+        // Actualizar indicadores
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.indicator');
+            // La posición real del indicador es currentIndex - 2
+            indicators.forEach((dot, idx) => {
+                const realSlideIndex = currentIndex - 2;
+                dot.classList.toggle('active', idx === realSlideIndex);
+                dot.setAttribute('aria-selected', (idx === realSlideIndex).toString());
+            });
+        }
+        
+        // Mover slide con manejo de loop infinito (el truco de la ingeniería)
+        function moveSlide(direction) {
+            // Prevenimos movimientos rápidos que rompen la animación
+            if (carousel.isAnimating) return;
+            carousel.isAnimating = true;
+            
+            const oldIndex = currentIndex;
+            currentIndex += direction;
+            
+            carousel.style.transition = 'transform var(--transition-smooth)';
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // Lógica de transición "seamless" (sin costuras)
+            if (currentIndex > totalRealSlides + 1) { // Si pasamos el último slide real + el primer clon
+                // Después de la animación visible, saltamos instantáneamente al primer slide real
+                setTimeout(() => {
+                    carousel.style.transition = 'none';
+                    currentIndex = 2;
+                    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    carousel.isAnimating = false;
+                    updateIndicators();
+                }, 500); // 500ms es la duración de la transición
+            } else if (currentIndex < 1) { // Si vamos antes del primer slide real + los clones
+                // Después de la animación visible, saltamos instantáneamente al último slide real
+                setTimeout(() => {
+                    carousel.style.transition = 'none';
+                    currentIndex = totalRealSlides + 1;
+                    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    carousel.isAnimating = false;
+                    updateIndicators();
+                }, 500);
+            } else {
+                // Si estamos en un slide normal, simplemente esperamos que termine la animación
+                setTimeout(() => {
+                    carousel.isAnimating = false;
+                    updateIndicators();
+                }, 500);
+            }
+        }
+
+        // ==========================================================================
+        // 6. Lógica del Modal (Zoom y Pan)
+        // ==========================================================================
+        
+        // Variables para Modal (Zoom/Pan)
         let modalScale = 1;
         let isDragging = false;
-        let startY = 0;
-
-        // Crear indicadores (dots)
-        for (let i = 1; i <= totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('indicator');
-            dot.addEventListener('click', () => {
-                moveSlide(i - currentIndex);
-            });
-            indicatorsContainer.appendChild(dot);
-        }
-        const indicators = document.querySelectorAll('.indicator');
-
-        function updateIndicators() {
-            indicators.forEach((dot, idx) => {
-                dot.classList.toggle('active', idx + 1 === currentIndex);
-            });
-        }
-
-        function moveSlide(direction) {
-            currentIndex += direction;
-            if (currentIndex > totalSlides) {
-                currentIndex = 1;
-                carousel.style.transition = 'none';
-            } else if (currentIndex < 1) {
-                currentIndex = totalSlides;
-                carousel.style.transition = 'none';
-            } else {
-                carousel.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-            }
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-            requestAnimationFrame(() => {
-                carousel.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-            });
-            updateIndicators();
-        }
-
-        // Inicializar
-        updateIndicators();
-
-        // Swipe
-        carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; });
-        carousel.addEventListener('touchend', (e) => {
-            const endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) moveSlide(1);
-                else moveSlide(-1);
-            }
-        });
-
-        // Modal functions
+        let translateX = 0;
+        let translateY = 0;
+        let initialDistance = 0;
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalContainer = document.getElementById('modalImgContainer');
+        // Mapeo de índices (¡Rutas actualizadas a .png!)
+        const realImageSources = ["", "1.png", "2.png", "3.png", "4.png", "5.png"]; 
+        
         function openModal(index) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImg');
-            const imgSrc = `images/imagen${index}.png`;
+            modalImg.src = realImageSources[index]; // Usamos el mapeo correcto
             modal.style.display = 'block';
-            modalImg.src = imgSrc;
+            document.body.style.overflow = 'hidden';
+            modal.focus();
+
             modalImg.onload = () => {
                 modalScale = 1;
+                translateX = 0;
+                translateY = 0;
                 updateModalTransform();
             };
-            document.body.style.overflow = 'hidden';
         }
-
-        function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            modalScale = 1;
-            updateModalTransform();
-        }
-
-        function updateModalTransform() {
-            const container = document.getElementById('modalImgContainer');
-            container.style.transform = `scale(${modalScale})`;
-        }
-
-        // Zoom rueda
-        document.getElementById('modalImgContainer').addEventListener('wheel', (e) => {
-            e.preventDefault();
-            const delta = e.deltaY > 0 ? 0.9 : 1.1;
-            modalScale = Math.min(Math.max(modalScale * delta, 0.5), 5);
-            updateModalTransform();
-        });
-
-        // Pinch zoom y pan
-        let initialDistance = 0;
-        const modalContainer = document.getElementById('modalImgContainer');
-        modalContainer.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
-                initialDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                isDragging = false;
-            } else if (e.touches.length === 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            }
-        });
-        modalContainer.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2 && initialDistance > 0) {
-                const currentDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                const delta = currentDistance / initialDistance;
-                modalScale = Math.min(Math.max(modalScale * delta, 0.5), 5);
-                updateModalTransform();
-                initialDistance = currentDistance;
-                e.preventDefault();
-            } else if (isDragging && modalScale > 1) {
-                const deltaX = e.touches[0].clientX - startX;
-                const deltaY = e.touches[0].clientY - startY;
-                const currentTransform = `translate(${deltaX}px, ${deltaY}px) scale(${modalScale})`;
-                modalContainer.style.transform = currentTransform;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                e.preventDefault();
-            }
-        });
-        modalContainer.addEventListener('touchend', (e) => {
-            initialDistance = 0;
-            if (e.touches.length === 0) isDragging = false;
-        });
-
-        // Cerrar modal
-        window.onclick = (e) => {
-            if (e.target === document.getElementById('imageModal')) closeModal();
-        };
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-    </script>
-</body>
-</html>
