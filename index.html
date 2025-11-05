@@ -115,32 +115,45 @@
             /* La imagen no tiene bordes internos para maximizar el espacio de visualización */
         }
 
-        /* Flechas de navegación */
+        /* Flechas de navegación - ¡MEJORADAS! */
         .arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: var(--accent-color);
-            color: var(--white);
+            /* Fondo blanco semitransparente con efecto blur para un look premium */
+            background: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--white); /* Texto blanco */
             border: none;
-            font-size: clamp(1.25rem, 4vw, 2rem);
+            font-size: clamp(1.8rem, 4vw, 2.5rem); /* Flechas más grandes y visibles */
             cursor: pointer;
             border-radius: 50%;
-            width: clamp(40px, 10vw, 55px);
-            height: clamp(40px, 10vw, 55px);
+            width: clamp(50px, 10vw, 65px); /* Más grandes */
+            height: clamp(50px, 10vw, 65px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            transition: background var(--transition-fast);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            transition: background var(--transition-fast), transform var(--transition-fast);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra más pronunciada */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Sombra para el icono de la flecha */
         }
 
         .arrow-left { left: 1rem; }
         .arrow-right { right: 1rem; }
 
-        .arrow:hover { background: #c9302c; } /* Tono más oscuro al pasar el ratón */
-        .arrow:focus { outline: none; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5), 0 0 0 6px var(--accent-color); }
+        .arrow:hover { 
+            background: rgba(255, 255, 255, 0.4); /* Más opaco al pasar el ratón */
+            transform: translateY(-50%) scale(1.05); /* Pequeño zoom al pasar el ratón */
+        }
+        .arrow:active {
+            transform: translateY(-50%) scale(0.95); /* Efecto de click */
+        }
+        .arrow:focus { 
+            outline: none; 
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8), 0 0 0 6px var(--accent-color); /* Anillo de enfoque accesible */
+        }
 
         /* Indicadores de slide */
         .indicators {
@@ -157,13 +170,15 @@
             width: 0.8rem;
             height: 0.8rem;
             border-radius: 50%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.6); /* Fondo blanco semitransparente */
+            border: 1px solid rgba(0,0,0,0.2); /* Borde sutil */
             cursor: pointer;
             transition: background var(--transition-fast), transform var(--transition-fast);
         }
 
         .indicator.active {
-            background: var(--accent-color);
+            background: var(--accent-color); /* Activo con el color de acento */
+            border-color: var(--accent-color);
             transform: scale(1.15);
         }
         
@@ -373,7 +388,7 @@
                     carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
                     carousel.isAnimating = false;
                     updateIndicators();
-                }, 500); // 500ms es la duración de la transición
+                }, 500); // 500ms es la duración de la transición (debe coincidir con --transition-smooth)
             } else if (currentIndex < 1) { // Si vamos antes del primer slide real + los clones
                 // Después de la animación visible, saltamos instantáneamente al último slide real
                 setTimeout(() => {
@@ -382,7 +397,7 @@
                     carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
                     carousel.isAnimating = false;
                     updateIndicators();
-                }, 500);
+                }, 500); // 500ms es la duración de la transición
             } else {
                 // Si estamos en un slide normal, simplemente esperamos que termine la animación
                 setTimeout(() => {
@@ -421,3 +436,92 @@
                 updateModalTransform();
             };
         }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            modalScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateModalTransform();
+        }
+
+        function updateModalTransform() {
+            modalContainer.style.transform = `translate(-50%, -50%) scale(${modalScale}) translate(${translateX}px, ${translateY}px)`;
+        }
+
+        // Eventos de arrastre y zoom (Touch y Rueda)
+        modalContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            modalScale = Math.min(Math.max(modalScale + delta, 0.5), 5);
+            updateModalTransform();
+        }, { passive: false });
+
+        modalContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                isDragging = false;
+            } else if (e.touches.length === 1 && modalScale > 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            }
+        }, { passive: false });
+
+        modalContainer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && initialDistance > 0) {
+                const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                const delta = currentDistance / initialDistance;
+                modalScale = Math.min(Math.max(modalScale * delta, 0.5), 5);
+                initialDistance = currentDistance;
+                e.preventDefault();
+            } else if (isDragging && e.touches.length === 1) {
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                updateModalTransform();
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        modalContainer.addEventListener('touchend', () => {
+            initialDistance = 0;
+            isDragging = false;
+        });
+        
+        // Eventos de swipe para carrusel
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            // Si el movimiento es mayor a 50px, lo consideramos un swipe
+            if (Math.abs(diff) > 50) {
+                moveSlide(diff > 0 ? 1 : -1);
+            }
+        }, { passive: true });
+
+
+        // Cerrar modal con clic fuera o tecla ESC
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ==========================================================================
+        // 7. Inicialización
+        // ==========================================================================
+        createIndicators();
+        updateIndicators();
+        
+        // Configuramos la posición inicial al slide real index 2 (después de los clones)
+        carousel.style.transition = 'none';
+        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    </script>
+</body>
+</html>
